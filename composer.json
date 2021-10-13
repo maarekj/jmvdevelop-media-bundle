@@ -1,0 +1,32 @@
+{
+  "name": "jmvdevelop/media-bundle",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Joseph Maarek",
+      "email": "josephmaarek@gmail.com"
+    }
+  ],
+  "require": {
+    "doctrine/orm": "^2.10",
+    "doctrine/doctrine-bundle": "^2.4",
+    "symfony/validator": "^5.3",
+    "webmozart/assert": "^1.10",
+    "jmvdevelop/sameas-bundle": "^1.0",
+    "wapmorgan/media-file": "^0.1.4",
+    "liip/imagine-bundle": "^2.6",
+    "league/flysystem": "^2.3",
+    "league/flysystem-memory": "^2.0",
+    "symfony/http-kernel": "^5.3",
+    "symfony/config": "^5.3",
+    "jmvdevelop/domain": "^2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "JmvDevelop\\MediaBundle\\": "src"
+    }
+  },
+  "require-dev": {
+    "vimeo/psalm": "^4.10"
+  }
+}

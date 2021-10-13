@@ -1,0 +1,36 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        bind:
+            League\Flysystem\FilesystemOperator: "@jmv_develop_media.filesystem"
+            Doctrine\ORM\EntityManager: "@jmv_develop_media.entity_manager"
+            JmvDevelop\MediaBundle\UrlGenerator\MediaUrlGeneratorInterface: "@jmv_develop_media.media_url_generator"
+
+    _instanceof:
+        Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface:
+            public: true
+            autowire: true
+            tags:
+                - { name: 'doctrine.repository_service' }
+
+        JmvDevelop\Domain\HandlerInterface:
+            tags:
+                - { name: "jmv_develop.domain.handler" }
+
+    JmvDevelop\MediaBundle\Controller\:
+        resource: '../src/Controller'
+
+    JmvDevelop\MediaBundle\LiipUploadLoader:
+        tags:
+            - { name: "liip_imagine.binary.loader", loader: jmv_develop_media.upload_loader }
+
+    JmvDevelop\MediaBundle\LiipCacheResolver:
+        tags:
+            - { name: "liip_imagine.cache.resolver", resolver: jmv_develop_media.cache_resolver }
+
+    JmvDevelop\MediaBundle\Domain\Handler\:
+        resource: '../src/Domain/Handler'
+
+    JmvDevelop\MediaBundle\Repository\MediaRepository: ~
+    JmvDevelop\MediaBundle\MediaHelper: ~

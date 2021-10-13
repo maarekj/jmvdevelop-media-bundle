@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -e
+
+BASE_DIR=$(realpath "$(dirname "$0")")
+PROJECT_DIR=$(realpath "${BASE_DIR}/../")
+
+if [ ! -f "$BASE_DIR/.php-cs-fixer/vendor/bin/php-cs-fixer" ]; then
+  mkdir --parents "$BASE_DIR/.php-cs-fixer"
+  composer require --working-dir="$BASE_DIR/.php-cs-fixer/" friendsofphp/php-cs-fixer
+fi
+
+BIN="$BASE_DIR/.php-cs-fixer/vendor/bin/php-cs-fixer --config="$PROJECT_DIR/.php-cs-fixer.php" $*"
+echo "$BIN"
+
+$BIN

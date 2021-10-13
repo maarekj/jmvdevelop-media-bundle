@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -e
+
+BASE_DIR=$(realpath "$(dirname "$0")")
+PROJECT_DIR=$(realpath "${BASE_DIR}/../")
+
+BIN="${PROJECT_DIR}/vendor/bin/psalm --config="${PROJECT_DIR}/psalm.xml" $*"
+echo "$BIN"
+
+$BIN
