@@ -21,5 +21,6 @@
     <issueHandlers>
         <RedundantConditionGivenDocblockType errorLevel="suppress"/>
         <Trace errorLevel="error"/>
+        <UnusedClosureParam errorLevel="info"/>
     </issueHandlers>
 </psalm>

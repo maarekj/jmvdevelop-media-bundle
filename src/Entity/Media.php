@@ -53,6 +53,10 @@ class Media
     #[NotNull]
     private int $height;
 
+    #[Column(type: 'datetimetz_immutable', nullable: false)]
+    #[NotNull]
+    private \DateTimeImmutable $createdDate;
+
     /**
      * @param Media::TYPE_*    $type
      * @param Media::CONTEXT_* $context
@@ -64,6 +68,7 @@ class Media
         $this->name = $name;
         $this->width = $width;
         $this->height = $height;
+        $this->createdDate = new \DateTimeImmutable();
     }
 
     public function getExtension(): ?string
@@ -113,5 +118,10 @@ class Media
     public function getHeight(): int
     {
         return $this->height;
+    }
+
+    public function getCreatedDate(): \DateTimeImmutable
+    {
+        return $this->createdDate;
     }
 }

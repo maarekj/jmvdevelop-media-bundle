@@ -19,7 +19,10 @@
     "league/flysystem-memory": "^2.0",
     "symfony/http-kernel": "^5.3",
     "symfony/config": "^5.3",
-    "jmvdevelop/domain": "^2.0"
+    "jmvdevelop/domain": "^2.0",
+    "symfony/form": "^5.3",
+    "symfony/options-resolver": "^5.3",
+    "twig/twig": "^3.3"
   },
   "autoload": {
     "psr-4": {
@@ -27,6 +30,7 @@
     }
   },
   "require-dev": {
-    "vimeo/psalm": "^4.10"
+    "vimeo/psalm": "^4.10",
+    "jmvdevelop/graphql-generator": "^2.3"
   }
 }

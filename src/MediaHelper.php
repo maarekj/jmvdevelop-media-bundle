@@ -43,7 +43,7 @@ final class MediaHelper implements HandlerAwareInterface
         if ($context === $media->getContext()) {
             return $media;
         } elseif (Media::CONTEXT_TMP === $media->getContext()) {
-            $cmd = new MoveMedia($media, Media::CONTEXT_TMP);
+            $cmd = new MoveMedia($media, $context);
             $this->domainHandler->handle($cmd);
 
             return $cmd->getReturnValue();

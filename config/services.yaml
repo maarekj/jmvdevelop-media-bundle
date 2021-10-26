@@ -34,3 +34,6 @@ services:
 
     JmvDevelop\MediaBundle\Repository\MediaRepository: ~
     JmvDevelop\MediaBundle\MediaHelper: ~
+    JmvDevelop\MediaBundle\Graphql\ImageTypeHelper: ~
+    JmvDevelop\MediaBundle\Form\Type\ImageType: ~
+    JmvDevelop\MediaBundle\Twig\ImageTwigExtension: ~
