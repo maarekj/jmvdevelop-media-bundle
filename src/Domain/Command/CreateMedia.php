@@ -23,8 +23,7 @@ final class CreateMedia implements CommandInterface
     //------------------------------------------------------------------------
 
     /**
-     * @param Media::TYPE_*    $type
-     * @param Media::CONTEXT_* $context
+     * @param Media::TYPE_* $type
      */
     public function __construct(
         #[SameAs(class: Media::class)]
@@ -57,7 +56,6 @@ final class CreateMedia implements CommandInterface
         return $this->type;
     }
 
-    /** @return Media::CONTEXT_* */
     public function getContext(): string
     {
         return $this->context;

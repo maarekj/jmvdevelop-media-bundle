@@ -8,6 +8,7 @@ use JmvDevelop\Domain\Exception\DomainException;
 use JmvDevelop\Domain\HandlerInterface;
 use JmvDevelop\MediaBundle\Domain\Command\CreateMedia;
 use JmvDevelop\MediaBundle\Entity\Media;
+use JmvDevelop\MediaBundle\Graphql\ImageTypeHelper;
 use JmvDevelop\MediaBundle\UrlGenerator\MediaUrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -24,7 +25,7 @@ final class MediaController extends AbstractController
     public function uploadMediaAction(
         Request $request,
         HandlerInterface $handler,
-        MediaUrlGeneratorInterface $mediaUrlGenerator
+        MediaUrlGeneratorInterface $mediaUrlGenerator,
     ): Response {
         $files = $request->files->all();
 
@@ -66,6 +67,53 @@ final class MediaController extends AbstractController
             return $this->jsonError($e->getMessage(), 500);
         } catch (\Throwable $e) {
             return $this->jsonError($e->getMessage(), 500);
+        }
+    }
+
+    #[Route(path: '/media/ckeditor/upload', name: 'media_upload.ckeditor', methods: ['POST'])]
+    public function ckEditorUploadMediaAction(
+        Request $request,
+        HandlerInterface $handler,
+        ImageTypeHelper $imageTypeHelper,
+    ): Response {
+        $files = $request->files->all();
+
+        if (0 === \count($files)) {
+            return $this->jsonError('Invalid request', 400);
+        }
+
+        /** @var File $file */
+        $file = $files[\array_keys($files)[0]];
+
+        $type = (string) $request->request->get('type', 'image');
+        if (Media::TYPE_IMAGE !== $type) {
+            return $this->jsonError('Invalid request', 400);
+        }
+
+        $command = new CreateMedia(
+            type: $type,
+            file: $file,
+            context: 'ckeditor'
+        );
+
+        try {
+            $handler->handle($command);
+            $media = $command->getReturnValue();
+            Assert::notNull($media);
+
+            return $this->json([
+                'urls' => [
+                    'default' => $imageTypeHelper->resolveFilteredUrl(root: $media, filter: 'widen1200'),
+                    '100' => $imageTypeHelper->resolveFilteredUrl(root: $media, filter: 'widen100'),
+                    '500' => $imageTypeHelper->resolveFilteredUrl(root: $media, filter: 'widen500'),
+                    '1000' => $imageTypeHelper->resolveFilteredUrl(root: $media, filter: 'widen1000'),
+                    '1200' => $imageTypeHelper->resolveFilteredUrl(root: $media, filter: 'widen1200'),
+                ],
+            ]);
+        } catch (FileException|DomainException $e) {
+            return $this->json(['error' => ['message' => $e->getMessage()]])->setStatusCode(405);
+        } catch (\Throwable $e) {
+            return $this->json(['error' => ['message' => $e->getMessage()]])->setStatusCode(500);
         }
     }
 

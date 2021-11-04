@@ -30,8 +30,8 @@ final class GraphqlConfig
         $this->schema->addType(EnumType::create(
             name: 'ImageFilterEnum',
             values: \array_map(function (string $filter) {
-            return EnumType::value(name: $filter, value: $filter);
-        }, $filters),
+                return EnumType::value(name: $filter, value: $filter);
+            }, $filters),
         ));
     }
 

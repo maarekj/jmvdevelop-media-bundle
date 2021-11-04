@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace JmvDevelop\MediaBundle\Twig;
 
 use JmvDevelop\MediaBundle\Entity\Media;
@@ -16,10 +18,10 @@ final class ImageTwigExtension extends AbstractExtension
     public function getFilters()
     {
         return [
-            new TwigFilter("image_reference", function (?Media $image): ?string {
-                return $this->imageUrl($image, "reference");
+            new TwigFilter('image_reference', function (?Media $image): ?string {
+                return $this->imageUrl($image, 'reference');
             }),
-            new TwigFilter("image_url", function (?Media $image, string $filter): ?string {
+            new TwigFilter('image_url', function (?Media $image, string $filter): ?string {
                 return $this->imageUrl($image, $filter);
             }),
         ];
@@ -27,7 +29,7 @@ final class ImageTwigExtension extends AbstractExtension
 
     private function imageUrl(?Media $image, string $filter): ?string
     {
-        if ($image === null) {
+        if (null === $image) {
             return null;
         }
 

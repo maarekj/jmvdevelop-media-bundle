@@ -21,8 +21,7 @@ final class ImageType extends AbstractType
     public function __construct(
         private MediaRepository $repo,
         private ImageTypeHelper $helper
-    )
-    {
+    ) {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -30,7 +29,7 @@ final class ImageType extends AbstractType
         $builder->addViewTransformer(new CallbackTransformer(
             function (Media|null $value): string {
                 if ($value instanceof Media) {
-                    return (string)$value->getId();
+                    return (string) $value->getId();
                 }
 
                 return '';
@@ -40,7 +39,7 @@ final class ImageType extends AbstractType
                     return null;
                 }
                 $id = match (true) {
-                    \is_string($value) => (int)$value,
+                    \is_string($value) => (int) $value,
                     \is_int($value) => $value,
                 };
 
@@ -56,7 +55,7 @@ final class ImageType extends AbstractType
         $imageId = $image?->getId();
 
         /** @psalm-suppress MixedArrayAssignment */
-        $view->vars['default_image_id'] = null === $imageId ? null : (string)$imageId;
+        $view->vars['default_image_id'] = null === $imageId ? null : (string) $imageId;
 
         /** @psalm-suppress MixedArrayAssignment */
         $view->vars['reference_url'] = null !== $image ? $this->helper->resolveFilteredUrl(root: $image, filter: 'reference') : null;

@@ -33,11 +33,9 @@ class Media
     #[Choice(choices: ['image', 'video'])]
     private string $type;
 
-    /** @var Media::CONTEXT_* */
     #[Column(type: 'string', length: 10, nullable: false)]
     #[NotNull]
     #[NotBlank]
-    #[Choice(choices: ['tmp', 'media'])]
     private string $context;
 
     #[Column(type: 'string', length: 255, nullable: false)]
@@ -58,10 +56,9 @@ class Media
     private \DateTimeImmutable $createdDate;
 
     /**
-     * @param Media::TYPE_*    $type
-     * @param Media::CONTEXT_* $context
+     * @param Media::TYPE_* $type
      */
-    public function __construct(string $type, Media|string $context, string $name, int $width, int $height)
+    public function __construct(string $type, string $context, string $name, int $width, int $height)
     {
         $this->type = $type;
         $this->context = $context;
@@ -93,13 +90,11 @@ class Media
         return $this->type;
     }
 
-    /** @return Media::CONTEXT_* */
     public function getContext(): string
     {
         return $this->context;
     }
 
-    /** @param Media::CONTEXT_* $context */
     public function setContext(string $context): void
     {
         $this->context = $context;

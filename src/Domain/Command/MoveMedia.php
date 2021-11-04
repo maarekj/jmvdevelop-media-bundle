@@ -18,9 +18,6 @@ final class MoveMedia implements CommandInterface
 
     //------------------------------------------------------------------------
 
-    /**
-     * @param Media::CONTEXT_* $context
-     */
     public function __construct(
         /* @LogFields(fields={"id", "name", "type", "context"}) */
         private Media $media,
@@ -33,7 +30,6 @@ final class MoveMedia implements CommandInterface
         return $this->media;
     }
 
-    /** @return Media::CONTEXT_* */
     public function getContext(): string
     {
         return $this->context;
