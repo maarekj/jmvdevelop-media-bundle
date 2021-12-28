@@ -1,0 +1,4 @@
+services:
+    JmvDevelop\MediaBundle\Filter\ResizeFilterLoader:
+        tags:
+            - { name: "liip_imagine.filter.loader", loader: jmv_resize }

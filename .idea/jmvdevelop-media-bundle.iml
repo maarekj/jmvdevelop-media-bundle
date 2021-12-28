@@ -99,6 +99,8 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/jmvdevelop/graphql-generator" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/form" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-intl-icu" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/azjezz/psl" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/php-standard-library/psalm-plugin" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

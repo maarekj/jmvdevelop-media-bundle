@@ -18,6 +18,7 @@ final class Configuration implements ConfigurationInterface
             ->scalarNode('entity_manager_service')->defaultValue('doctrine.orm.default_entity_manager')->end()
             ->scalarNode('media_url_generator_service')->isRequired()->end()
             ->scalarNode('filesystem_service')->isRequired()->end()
+            ->booleanNode('with_resize_filter')->defaultTrue()->end()
             ->end()
             ->end();
 

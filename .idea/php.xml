@@ -96,6 +96,8 @@
       <path value="$PROJECT_DIR$/vendor/jmvdevelop/graphql-generator" />
       <path value="$PROJECT_DIR$/vendor/symfony/form" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-icu" />
+      <path value="$PROJECT_DIR$/vendor/azjezz/psl" />
+      <path value="$PROJECT_DIR$/vendor/php-standard-library/psalm-plugin" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0">

@@ -22,7 +22,8 @@
     "jmvdevelop/domain": "^2.0",
     "symfony/form": "^5.3",
     "symfony/options-resolver": "^5.3",
-    "twig/twig": "^3.3"
+    "twig/twig": "^3.3",
+    "azjezz/psl": "^1.9"
   },
   "autoload": {
     "psr-4": {
@@ -31,6 +32,7 @@
   },
   "require-dev": {
     "vimeo/psalm": "^4.10",
-    "jmvdevelop/graphql-generator": "^2.3"
+    "jmvdevelop/graphql-generator": "^2.3",
+    "php-standard-library/psalm-plugin": "^1.1"
   }
 }

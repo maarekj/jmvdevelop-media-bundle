@@ -22,5 +22,10 @@ final class JmvDevelopMediaExtension extends Extension
         $container->setAlias('jmv_develop_media.filesystem', (string) $config['filesystem_service']);
         $container->setAlias('jmv_develop_media.entity_manager', (string) $config['entity_manager_service']);
         $container->setAlias('jmv_develop_media.media_url_generator', (string) $config['media_url_generator_service']);
+
+        $withResizeFilter = (bool) $config['with_resize_filter'];
+        if (true === $withResizeFilter) {
+            $loader->load('resize_filter.yaml');
+        }
     }
 }

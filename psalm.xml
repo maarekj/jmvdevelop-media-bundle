@@ -16,6 +16,7 @@
     </projectFiles>
 
     <plugins>
+        <pluginClass class="Psl\Psalm\Plugin"/>
     </plugins>
 
     <issueHandlers>
