@@ -8,6 +8,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Webmozart\Assert\Assert;
 
 final class JmvDevelopMediaExtension extends Extension
 {
@@ -27,5 +28,11 @@ final class JmvDevelopMediaExtension extends Extension
         if (true === $withResizeFilter) {
             $loader->load('resize_filter.yaml');
         }
+
+        $namerDefaultId = $config['namer_default_id'];
+        Assert::notNull($namerDefaultId);
+        Assert::stringNotEmpty($namerDefaultId);
+
+        $container->setParameter('jmv_develop_media.default_namer_id', $namerDefaultId);
     }
 }

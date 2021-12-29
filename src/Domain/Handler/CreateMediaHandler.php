@@ -10,6 +10,8 @@ use JmvDevelop\Domain\Exception\DomainException;
 use JmvDevelop\Domain\Utils\ValidatorUtils;
 use JmvDevelop\MediaBundle\Domain\Command\CreateMedia;
 use JmvDevelop\MediaBundle\Entity\Media;
+use JmvDevelop\MediaBundle\Namer\NamerInterface;
+use JmvDevelop\MediaBundle\Namer\NamerRegistry;
 use League\Flysystem\FilesystemException;
 use League\Flysystem\FilesystemOperator;
 use wapmorgan\MediaFile\Exceptions\FileAccessException;
@@ -23,7 +25,9 @@ final class CreateMediaHandler extends AbstractHandler
     public function __construct(
         private EntityManager $manager,
         private ValidatorUtils $validatorUtils,
-        private FilesystemOperator $filesystem
+        private FilesystemOperator $filesystem,
+        private NamerRegistry $namerRegistry,
+        private string $defaultNamerId,
     ) {
         parent::__construct([CreateMedia::class]);
     }
@@ -44,18 +48,10 @@ final class CreateMediaHandler extends AbstractHandler
     {
         $context = $command->getContext();
         $file = $command->getFile();
-        $guessExtension = $file->guessExtension();
-        $extension = null !== $guessExtension ? $guessExtension : $file->getExtension();
 
-        $filename = \date('YmdHis').\md5(\uniqid()).'.'.$extension;
-        $md5 = \md5($filename);
-        $a = $md5[0];
-        $b = $md5[1];
-        $c = $md5[2];
-        $d = $md5[3];
-        $filename = \implode('/', [$a, $b, $c, $d]).'/'.$filename;
-
-        $targetPath = \sprintf('%s/%s', $context, $filename);
+        $namer = $this->namer($command);
+        $filename = $namer->filename(file: $file, context: $command->getContext(), name: $command->getName());
+        $targetPath = $namer->path(file: $file, context: $command->getContext(), name: $command->getName());
 
         $fd = null;
         try {
@@ -89,6 +85,16 @@ final class CreateMediaHandler extends AbstractHandler
                 \fclose($fd);
             }
         }
+    }
+
+    private function namer(CreateMedia $command): NamerInterface
+    {
+        $namerId = $command->getNamer();
+        if (null === $namerId) {
+            $namerId = $this->defaultNamerId;
+        }
+
+        return $this->namerRegistry->getNamerOrThrow(id: $namerId);
     }
 
     /** @return array{0: int, 1: int} */

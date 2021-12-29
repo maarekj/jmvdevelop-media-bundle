@@ -28,13 +28,14 @@ final class CreateMedia implements CommandInterface
     public function __construct(
         #[SameAs(class: Media::class)]
         private string $type,
-
         /** @LogFields(fields={"path", "filename", "pathname", "size"}) */
         #[Assert\File(maxSize: '10M', mimeTypes: ['image/jpeg', 'image/png'], groups: ['image'])]
         #[Assert\File(maxSize: '50M', mimeTypes: ['video/mp4'], groups: ['video'])]
         private File $file,
         #[SameAs(class: Media::class)]
         private string $context,
+        private ?string $namer = null,
+        private ?string $name = null,
     ) {
     }
 
@@ -64,5 +65,15 @@ final class CreateMedia implements CommandInterface
     public function getFile(): File
     {
         return $this->file;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function getNamer(): ?string
+    {
+        return $this->namer;
     }
 }

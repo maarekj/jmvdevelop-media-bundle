@@ -19,6 +19,7 @@ final class Configuration implements ConfigurationInterface
             ->scalarNode('media_url_generator_service')->isRequired()->end()
             ->scalarNode('filesystem_service')->isRequired()->end()
             ->booleanNode('with_resize_filter')->defaultTrue()->end()
+            ->scalarNode('namer_default_id')->defaultValue('default')->end()
             ->end()
             ->end();
 

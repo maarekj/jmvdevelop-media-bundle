@@ -46,10 +46,17 @@ final class MediaController extends AbstractController
             return $this->jsonError('Invalid request', 400);
         }
 
+        $namer = (string) $request->request->get('namer', '');
+        $namer = '' === $namer ? null : $namer;
+        $name = (string) $request->request->get('name', '');
+        $name = '' === $name ? null : $name;
+
         $command = new CreateMedia(
             type: $type,
             file: $file,
-            context: $context
+            context: $context,
+            namer: $namer,
+            name: $name,
         );
 
         try {
@@ -93,7 +100,9 @@ final class MediaController extends AbstractController
         $command = new CreateMedia(
             type: $type,
             file: $file,
-            context: 'ckeditor'
+            context: 'ckeditor',
+            namer: null,
+            name: null,
         );
 
         try {

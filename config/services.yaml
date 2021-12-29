@@ -6,6 +6,7 @@ services:
             League\Flysystem\FilesystemOperator: "@jmv_develop_media.filesystem"
             Doctrine\ORM\EntityManager: "@jmv_develop_media.entity_manager"
             JmvDevelop\MediaBundle\UrlGenerator\MediaUrlGeneratorInterface: "@jmv_develop_media.media_url_generator"
+            "string $defaultNamerId": "%jmv_develop_media.default_namer_id%"
 
     _instanceof:
         Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface:
@@ -37,3 +38,11 @@ services:
     JmvDevelop\MediaBundle\Graphql\ImageTypeHelper: ~
     JmvDevelop\MediaBundle\Form\Type\ImageType: ~
     JmvDevelop\MediaBundle\Twig\ImageTwigExtension: ~
+
+    JmvDevelop\MediaBundle\Namer\DefaultNamer:
+        tags:
+          - { name: "jmv_develop_media.namer", key: "default" }
+
+    JmvDevelop\MediaBundle\Namer\NamerRegistry:
+        arguments:
+            $locator: !tagged_locator { tag: 'jmv_develop_media.namer', index_by: 'key' }
