@@ -110,15 +110,20 @@ final class MediaController extends AbstractController
             $media = $command->getReturnValue();
             Assert::notNull($media);
 
-            return $this->json([
-                'urls' => [
-                    'default' => $imageTypeHelper->resolveFilteredUrl(root: $media, filter: 'widen1200'),
-                    '100' => $imageTypeHelper->resolveFilteredUrl(root: $media, filter: 'widen100'),
-                    '500' => $imageTypeHelper->resolveFilteredUrl(root: $media, filter: 'widen500'),
-                    '1000' => $imageTypeHelper->resolveFilteredUrl(root: $media, filter: 'widen1000'),
-                    '1200' => $imageTypeHelper->resolveFilteredUrl(root: $media, filter: 'widen1200'),
-                ],
-            ]);
+            $urls = ['default' => $imageTypeHelper->resolveFilteredUrl(root: $media, filter: 'widen1200')];
+            $sizes = [
+              [100, 'widen100'],
+              [500, 'widen500'],
+              [1000, 'widen1000'],
+              [1200, 'widen1200'],
+            ];
+
+            foreach ($sizes as [$w, $filter]) {
+                $key = (string) \min($media->getWidth(), $w);
+                $urls[$key] = $imageTypeHelper->resolveFilteredUrl(root: $media, filter: $filter);
+            }
+
+            return $this->json(['urls' => $urls]);
         } catch (FileException|DomainException $e) {
             return $this->json(['error' => ['message' => $e->getMessage()]])->setStatusCode(405);
         } catch (\Throwable $e) {
