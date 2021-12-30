@@ -31,15 +31,12 @@ final class DefaultNamer implements NamerInterface
         $a = $uniqid[0] ?? 'a';
         $b = $uniqid[1] ?? 'a';
         $c = $uniqid[2] ?? 'a';
-        $d = $uniqid[3] ?? 'a';
-        $e = $uniqid[4] ?? 'a';
-        $f = $uniqid[5] ?? 'a';
 
         $name = null !== $name && '' !== $name ? \trim($name) : \trim($this->getDefaultName(file: $file));
         $name = '' === $name ? $uniqid : $name;
         $name = $this->slugger->slug($name, '-', 'en');
 
-        return $a.$b.$c.'/'.$name.'-'.$d.$e.$f.'.'.$extension;
+        return $a.$b.$c.'/'.$name.'.'.$extension;
     }
 
     private function getDefaultName(File $file): string
